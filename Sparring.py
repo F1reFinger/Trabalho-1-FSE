@@ -16,10 +16,10 @@ import json
     #print("Valores Gravados com sucesso!")
 
 def LeData():
-    with open('configuracao_sala_01.json', 'r') as f:
+    with open('configuracao_sala_02.json', 'r') as f:
         data = json.load(f)
     
-    print(data["nome"])
+    print(data["outputs"],["type"])
 
     # Closing file
     f.close()
