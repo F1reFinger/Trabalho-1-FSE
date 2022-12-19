@@ -44,7 +44,7 @@ def Temp():
         else:
             print("Não foram encontrados dados do sensor!!")
 
-#-----------------------------------------------------------------------------------------
+##########################################################################################
 
 def Board1():
     with open('configuracao_sala_01.json', 'r') as f:
@@ -71,7 +71,7 @@ def PlacasImpares():
     destino = (IPrincipal, porta)
     mensageiro1.connect(destino)
 
-    #-----------------------------------------------------------------------------------------
+##########################################################################################    
 
 def Board2():
     with open('configuracao_sala_02.json', 'r') as f:
@@ -98,9 +98,10 @@ def PlacasPares():
     destino = (IPrincipal, porta)
     mensageiro2.connect(destino)
 
+##########################################################################################
+
 def IniciaPinos():
 
-    #-----------------------------------------------------------------------------------------
     global luz1
     global luz2 
     global air
@@ -176,7 +177,7 @@ def IniciaPinos():
     GPIO.add_event_detect(SC_in, GPIO.RISING)#
     GPIO.add_event_detect(SC_out, GPIO.RISING)#
 
-    #-------------------------------------------------------------------------------------------
+##########################################################################################
 
 def leituraSensor():
     if GPIO.event_detected(SJan):
@@ -218,6 +219,8 @@ def Luz02():
         print("Luz 02 ligada")
         light2 = 0 
 
+##########################################################################################
+
 def ligAr():
     GPIO.output(air, GPIO.HIGH)
     print("Ar condicionado ligado")
@@ -254,6 +257,7 @@ def Desliga():
     GPIO.output(luz1, GPIO.LOW)
     GPIO.output(luz2, GPIO.LOW)
 
+##########################################################################################
 
 # Sistema de alarme
 def ligarAlarme():
@@ -283,6 +287,8 @@ def desligarAlarme():
         time.sleep(15)
         Desliga()
 
+##########################################################################################
+
 def AlertaGeral():
     GPIO.output(alarme, GPIO.HIGH)
     time.sleep(1)
@@ -295,6 +301,8 @@ def Fumacento():
         AlertaGeral()
         print("Sirene ligada")
 
+##########################################################################################
+
 def ContaPeople():
     global pessoas
     if GPIO.event_detected(SC_in):
@@ -305,6 +313,8 @@ def ContaPeople():
         server1.send(bytes(pessoas,"utf8")) 
     elif sala == 2:
         server2.send(bytes(pessoas,"utf8")) 
+
+##########################################################################################
 
 def main():
     global alarme

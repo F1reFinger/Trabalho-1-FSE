@@ -28,7 +28,6 @@ def Setup():
     placa2.connect(destino2)
 
 def menu1():
-    global servidor_central1
     print("Escolha uma das opções abaixo:")
     print("1 - Ligar Luz 1")
     print("2 - Desligar Luz 1")
@@ -45,19 +44,19 @@ def menu1():
     print("13 - Voltar ao menu principal")
     opt = int(input())
     if opt == 1:
-        placa1.send(bytes("L01","utf8"))
+        placa1.send(bytes("Luz1","utf8"))
     elif opt == 2:
         placa1.send(bytes("DL01","utf8"))
     elif opt == 3:
-        placa1.send(bytes("L02","utf8"))
+        placa1.send(bytes("luz2","utf8"))
     elif opt == 4:
         placa1.send(bytes("DL02","utf8"))
     elif opt == 5:
-        placa1.send(bytes("AC","utf8"))
+        placa1.send(bytes("air","utf8"))
     elif opt == 6:
         placa1.send(bytes("DAC","utf8"))
     elif opt == 7:
-        placa1.send(bytes("AL","utf8"))
+        placa1.send(bytes("alarme","utf8"))
     elif opt == 8:
         placa1.send(bytes("DAL","utf8"))
     elif opt == 9:
@@ -69,7 +68,7 @@ def menu1():
     elif opt == 12:
         placa1.send(bytes("DG","utf8"))
     elif opt == 13:
-        menu_principal()
+        config_menu()
     else:
         print("Opção inválida!")
     menu1()
@@ -92,31 +91,31 @@ def menu2():
     print("13 - Voltar ao menu principal")
     opt = int(input())
     if opt == 1:
-        placa1.send(bytes("L01","utf8"))
+        placa2.send(bytes("L01","utf8"))
     elif opt == 2:
-        placa1.send(bytes("DL01","utf8"))
+        placa2.send(bytes("DL01","utf8"))
     elif opt == 3:
-        placa1.send(bytes("L02","utf8"))
+        placa2.send(bytes("L02","utf8"))
     elif opt == 4:
-        placa1.send(bytes("DL02","utf8"))
+        placa2.send(bytes("DL02","utf8"))
     elif opt == 5:
-        placa1.send(bytes("AC","utf8"))
+        placa2.send(bytes("AC","utf8"))
     elif opt == 6:
-        placa1.send(bytes("DAC","utf8"))
+        placa2.send(bytes("DAC","utf8"))
     elif opt == 7:
-        placa1.send(bytes("AL","utf8"))
+        placa2.send(bytes("AL","utf8"))
     elif opt == 8:
-        placa1.send(bytes("DAL","utf8"))
+        placa2.send(bytes("DAL","utf8"))
     elif opt == 9:
-        placa1.send(bytes("L12","utf8"))
+        placa2.send(bytes("L12","utf8"))
     elif opt == 10:
-        placa1.send(bytes("D12","utf8"))
+        placa2.send(bytes("D12","utf8"))
     elif opt == 11:
-        placa1.send(bytes("LG","utf8"))
+        placa2.send(bytes("LG","utf8"))
     elif opt == 12:
-        placa1.send(bytes("DG","utf8"))
+        placa2.send(bytes("DG","utf8"))
     elif opt == 13:
-        menu_principal()
+        config_menu()
     else:
         print("Opção inválida!")
     menu2()
@@ -138,26 +137,26 @@ def menus():
     print("12 - Voltar ao menu principal")
     opt = int(input())
     if opt == 1:
-        placa1.send(bytes("L01","utf8"))
-        placa2.send(bytes("L01","utf8"))
+        placa1.send(bytes("Luz1","utf8"))
+        placa2.send(bytes("Luz1","utf8"))
     elif opt == 2:
         placa1.send(bytes("DL01","utf8"))
         placa2.send(bytes("DL01","utf8"))
     elif opt == 3:
-        placa1.send(bytes("L02","utf8"))
-        placa2.send(bytes("L02","utf8"))
+        placa1.send(bytes("Luz2","utf8"))
+        placa2.send(bytes("Luz2","utf8"))
     elif opt == 4:
         placa1.send(bytes("DL02","utf8"))
         placa2.send(bytes("DL02","utf8"))
     elif opt == 5:
-        placa1.send(bytes("AC","utf8"))
-        placa2.send(bytes("AC","utf8"))
+        placa1.send(bytes("air","utf8"))
+        placa2.send(bytes("air","utf8"))
     elif opt == 6:
         placa1.send(bytes("DAC","utf8"))
         placa2.send(bytes("DAC","utf8"))
     elif opt == 7:
-        placa1.send(bytes("AL","utf8"))
-        placa2.send(bytes("AL","utf8"))
+        placa1.send(bytes("alarme","utf8"))
+        placa2.send(bytes("alarme","utf8"))
     elif opt == 8:
         placa1.send(bytes("DAL","utf8"))
         placa2.send(bytes("DAL","utf8"))
@@ -171,10 +170,10 @@ def menus():
         placa1.send(bytes("LG","utf8"))
         placa2.send(bytes("LG","utf8"))
     elif opt == 12:
-        menu_principal()
+        config_menu()
     menus()
 
-def menu_principal():
+def config_menu():
     opcao = 0
     print("Bem vindo ao sistema de automação de predial!")
     print("Escolha uma das opções abaixo:")
@@ -192,13 +191,15 @@ def menu_principal():
         menus()
     elif opcao == 4:
         print("Saindo do sistema...")
-        servidor_central1.close()
-        servidor_central2.close()
+        placa1.send("Shutdown", "utf8")
+        placa2.send("Shutdown", "utf8")
+        placa1.close()
+        placa2.close()
         exit()
 
 def main():
     Setup()
-    menu_principal()
+    config_menu()
 
 if __name__ == "__main__":
     main()
